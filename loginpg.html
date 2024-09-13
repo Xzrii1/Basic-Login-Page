@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Import the Montserrat font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        /* Global styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.5s; /* Add transition effect */
+        }
+
+        /* Login form styles */
+        .login-form {
+            width: 300px;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s; /* Add transition effect */
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-form input {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        .login-form input:focus {
+            border-color: #aaaaaa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form button[type="submit"] {
+            width: 100%;
+            height: 40px;
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transform: perspective(1px) translateZ(0);
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+            transition-duration: 0.3s;
+            transition-property: transform;
+        }
+
+        .login-form button[type="submit"]:hover {
+            transform: scale(1.1);
+        }
+
+        .login-form button[type="submit"]:active {
+            transform: scale(0.9);
+        }
+
+        /* Add error styles */
+        .error {
+            background-color: #ffcccc; /* Change background color to red */
+            transition: background-color 0.5s; /* Add transition effect */
+        }
+
+        /* Add show password styles */
+        .password-input {
+            position: relative;
+        }
+
+        .eye {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .eye::before {
+            content: '\f06e';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .eye.blink {
+            animation: blink 0.5s infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                transform: translateY(-50%) scale(1);
+            }
+            50% {
+                transform: translateY(-50%) scale(0.9);
+            }
+            100% {
+                transform: translateY(-50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Login</h2>
+        <form>
+            <input type="text" placeholder="Username" required id="username" value="admin">
+            <div class="password-input">
+                <input type="password" placeholder="Password" required id="password" value="pass">
+                <span class="eye" id="show-password"></span>
+            </div>
+            <button type="submit" id="login-btn">Login</button>
+        </form>
+        <p id="error-msg"></p>
+    </div>
+
+    <script>
+        const loginForm = document.querySelector('.login-form');
+        const usernameInput = document.querySelector('#username');
+        const passwordInput = document.querySelector('#password');
+        const loginBtn = document.querySelector('#login-btn');
+        const errorMsg = document.querySelector('#error-msg');
+        const showPasswordBtn = document.querySelector('#show-password');
+
+        showPasswordBtn.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                showPasswordBtn.classList.add('blink');
+            } else {
+                passwordInput.type = 'password';
+                showPasswordBtn.classList.remove('blink');
+            }
+        });
+
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+
+            if (username === '' || password === '') {
+                errorMsg.textContent = 'Please fill in all fields';
+                loginForm.classList.add('error');
+                setTimeout(() => {
+                    loginForm.classList.remove('error');
+                }, 2000);
+            } else if (username !== 'admin' || password !== 'pass') {
+                errorMsg.textContent = 'Invalid username or password';
+                loginForm.classList.add('error');
+                setTimeout(() => {
+                    loginForm.classList.remove('error');
+                }, 2000);
+            } else {
+                // Login successful, redirect to dashboard or whatever
+                console.log('Login successful!');
+            }
+        });
+    </script>
+</body>
+</html>
